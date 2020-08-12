@@ -6,15 +6,16 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPligun = require('optimize-css-assets-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, 'src/index.js'),
+        app: path.resolve(__dirname, 'src/main.js'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].[hash].js',
-        publicPath: 'http://localhost:3001/',
+        // publicPath: 'http://localhost:3001/',
         chunkFilename: 'js/[id].[chunkhash].js'
     },
     optimization: {
@@ -23,20 +24,35 @@ module.exports = {
             new OptimizeCSSAssetsPligun()
         ]
     },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src')
+        }
+    },
     module: {
         rules: [
+            {
+                test: /\.vue$/,
+                use: 'vue-loader',
+            },
             {
                 test: /\.js$/,
                 use: 'babel-loader',
                 exclude: /node_modules/,
             },
             {
-                test: /\.css$/,
+                test: /\.css|postcss$/,
                 use: [
                     {
                         loader: MiniCSSExtractPlugin.loader,
                     },
-                    'css-loader'
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'postcss-loader'
                 ]
             },
             {
@@ -53,6 +69,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new VueLoaderPlugin(),
         new MiniCSSExtractPlugin({
             filename: 'css/[name].[hash].css',
             chunkFilename: 'css/[id]-[hash].css'
@@ -66,7 +83,7 @@ module.exports = {
         new AddAssetHtmlPlugin({
             filepath: path.resolve(__dirname, 'dist/js/*.dll.js'),
             outputPath: 'js',
-            publicPath: 'http://localhost:3001/js'
+            publicPath: 'js'
         }),
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: ['**/app.*'],
