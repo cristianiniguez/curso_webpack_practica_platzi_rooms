@@ -1,0 +1,32 @@
+@vue/babel-preset-app
+vue-loader
+
+@vue/babel-preset-app vue-loader
+
+tailwindcss
+vue-template-compiler
+postcss-loader
+autoprefixer
+postcss-import
+
+tailwindcss vue-template-compiler postcss-loader autoprefixer postcss-import 
+
+@babel/core
+@babel/plugin-proposal-class-properties
+@babel/plugin-syntax-dynamic-import
+@babel/preset-env
+add-asset-html-webpack-plugin
+babel-loader
+clean-webpack-plugin
+css-loader
+file-loader
+html-webpack-plugin
+optimize-css-assets-webpack-plugin
+style-loader
+terser-webpack-plugin
+url-loader
+webpack
+webpack-cli
+webpack-dev-server
+
+@babel/core @babel/plugin-proposal-class-properties @babel/plugin-syntax-dynamic-import @babel/preset-env add-asset-html-webpack-plugin babel-loader clean-webpack-plugin css-loader file-loader html-webpack-plugin optimize-css-assets-webpack-plugin style-loader terser-webpack-plugin url-loader webpack webpack-cli webpack-dev-server
